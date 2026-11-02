@@ -85,7 +85,7 @@ fun AppScreen(vm: MainViewModel) {
     Scaffold(
         bottomBar = {
             NavigationBar {
-                listOf("Cihaz" to Icons.Default.Phone, "Komutlar" to Icons.Default.Build, "Konsol" to Icons.Default.Menu, "Hazırlık" to Icons.Default.Check)
+                listOf("Cihaz" to UsbIcon, "Komutlar" to Icons.Default.Build, "Konsol" to Icons.Default.Menu, "Hazırlık" to Icons.Default.Check)
                     .forEachIndexed { i, (l, ic) ->
                         NavigationBarItem(selected = tab == i, onClick = { tab = i }, icon = { Icon(ic, null) }, label = { Text(l) })
                     }
@@ -134,7 +134,7 @@ fun DeviceTab(ui: UiState, vm: MainViewModel) {
             Surface(shape = RoundedCornerShape(40.dp, 40.dp, 40.dp, 12.dp), color = MaterialTheme.colorScheme.primaryContainer) {
                 Column(Modifier.padding(24.dp).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                     Box(Modifier.size(96.dp).background(MaterialTheme.colorScheme.primary, RoundedCornerShape(r)), contentAlignment = Alignment.Center) {
-                        if (ui.busy) CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary) else Icon(Icons.Default.Phone, null, Modifier.size(44.dp), tint = MaterialTheme.colorScheme.onPrimary)
+                        if (ui.busy) CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary) else Icon(UsbIcon, null, Modifier.size(44.dp), tint = MaterialTheme.colorScheme.onPrimary)
                     }
                     Text(title, fontSize = 30.sp, fontWeight = FontWeight.Black, lineHeight = 34.sp)
                     Text(sub)
@@ -321,4 +321,13 @@ fun FlashDialog(onDismiss: () -> Unit, onConfirm: (String) -> Unit) {
         confirmButton = { TextButton(onClick = { onConfirm(part) }, enabled = ack) { Text("Yükle") } },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Vazgeç") } },
     )
+}
+
+val UsbIcon: androidx.compose.ui.graphics.vector.ImageVector by lazy {
+    androidx.compose.ui.graphics.vector.ImageVector.Builder("Usb", 24.dp, 24.dp, 24f, 24f)
+        .addPath(
+            androidx.compose.ui.graphics.vector.addPathNodes("M15 7v4h1v2h-3V5h2l-3-4-3 4h2v8H8v-2.07c.7-.37 1.2-1.08 1.2-1.93 0-1.21-.99-2.2-2.2-2.2-1.21 0-2.2.99-2.2 2.2 0 .85.5 1.56 1.2 1.93V13c0 1.11.89 2 2 2h3v3.05c-.71.37-1.2 1.1-1.2 1.95 0 1.22.99 2.2 2.2 2.2 1.21 0 2.2-.98 2.2-2.2 0-.85-.49-1.58-1.2-1.95V15h3c1.11 0 2-.89 2-2v-2h1V7h-4z"),
+            fill = androidx.compose.ui.graphics.SolidColor(androidx.compose.ui.graphics.Color.Black),
+        )
+        .build()
 }
