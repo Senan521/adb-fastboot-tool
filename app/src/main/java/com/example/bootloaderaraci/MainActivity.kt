@@ -1,4 +1,3 @@
-@file:OptIn(ExperimentalMaterial3ExpressiveApi::class)
 
 package com.example.bootloaderaraci
 
@@ -65,7 +64,7 @@ fun AppTheme(content: @Composable () -> Unit) {
         dark -> darkColorScheme()
         else -> lightColorScheme()
     }
-    MaterialExpressiveTheme(colorScheme = scheme, motionScheme = MotionScheme.expressive(), content = content)
+    MaterialTheme(colorScheme = scheme, content = content)
 }
 
 val CHECKS = listOf(
@@ -135,11 +134,11 @@ fun DeviceTab(ui: UiState, vm: MainViewModel) {
             Surface(shape = RoundedCornerShape(40.dp, 40.dp, 40.dp, 12.dp), color = MaterialTheme.colorScheme.primaryContainer) {
                 Column(Modifier.padding(24.dp).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                     Box(Modifier.size(96.dp).background(MaterialTheme.colorScheme.primary, RoundedCornerShape(r)), contentAlignment = Alignment.Center) {
-                        if (ui.busy) LoadingIndicator() else Icon(Icons.Default.Phone, null, Modifier.size(44.dp), tint = MaterialTheme.colorScheme.onPrimary)
+                        if (ui.busy) CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary) else Icon(Icons.Default.Phone, null, Modifier.size(44.dp), tint = MaterialTheme.colorScheme.onPrimary)
                     }
                     Text(title, fontSize = 30.sp, fontWeight = FontWeight.Black, lineHeight = 34.sp)
                     Text(sub)
-                    ui.progress?.let { LinearWavyProgressIndicator(progress = { it / 100f }, modifier = Modifier.fillMaxWidth()) }
+                    ui.progress?.let { LinearProgressIndicator(progress = { it / 100f }, modifier = Modifier.fillMaxWidth()) }
                     Button(onClick = { if (ui.mode == Mode.NONE) vm.connect() else vm.disconnect() }, enabled = !ui.busy) {
                         Text(if (ui.mode == Mode.NONE) "Cihaz bağla" else "Bağlantıyı kes")
                     }
